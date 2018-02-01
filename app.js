@@ -33,7 +33,7 @@ var azureTableClient = new botbuilder_azure.AzureTableClient(tableName, process.
 var tableStorage = new botbuilder_azure.AzureBotStorage({ gzipData: false }, azureTableClient);
 
 // Create your bot with a function to receive messages from the user
-//var bot = new builder.UniversalBot(connector);
+var bot = new builder.UniversalBot(connector);
 
 //if(process.env.MicrosoftAppId) {
     bot.set('storage', tableStorage);
@@ -44,27 +44,28 @@ var DialogLabels = {
     Friends: 'Friends'
 };
 
-//session.send('You said ' + session.message.text);
-//bot.dialog('/',
+bot.dialog('/', function (session) {
+    session.send('You said ' + session.message.text);
+});
 
-var bot = new builder.UniversalBot(connector, [ 
-    function (session) {
-        builder.Prompts.choice(
-            session,
-            'Are you looking support for products or friends?',
-            [DialogLabels.Products, DialogLabels.Friends],
-            {
-                maxRetries: 3,
-                retryPrompt: 'Not a valid option'
-            });
-    },
-    function(session, result){
-        var selection = result.response.entity;
-        switch(selection) {
-            case DialogLabels.Products:
-                return session.send("You selected Products");
-            case DialogLabels.Hotels:
-                return session.send("You selected Hotels");
-        }
-    }
-]);
+// var bot = new builder.UniversalBot(connector, [ 
+//     function (session) {
+//         builder.Prompts.choice(
+//             session,
+//             'Are you looking support for products or friends?',
+//             [DialogLabels.Products, DialogLabels.Friends],
+//             {
+//                 maxRetries: 3,
+//                 retryPrompt: 'Not a valid option'
+//             });
+//     },
+//     function(session, result){
+//         var selection = result.response.entity;
+//         switch(selection) {
+//             case DialogLabels.Products:
+//                 return session.send("You selected Products");
+//             case DialogLabels.Hotels:
+//                 return session.send("You selected Hotels");
+//         }
+//     }
+// ]);
