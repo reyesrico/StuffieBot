@@ -44,8 +44,20 @@ var DialogLabels = {
     Friends: 'Friends'
 };
 
-bot.dialog('/', function (session) {
-    session.send('You said ' + session.message.text);
+bot.dialog('/', 
+    function (session) {
+        builder.Prompts.choice(session,
+        "Select topic to get help",
+        "Products|Friends",
+        { listStyle: builder.ListStyle.button });
+    },
+    function (session, results) {
+        if (results.response) {
+            session.send(`You selected ${results.response} as topic.`); 
+        } else {
+            session.send("OK");
+        }        
+    //session.send('You said ' + session.message.text);
 });
 
 // var bot = new builder.UniversalBot(connector, [ 
